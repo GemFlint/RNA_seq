@@ -1,0 +1,12 @@
+# Adaptors trimmed using fastp that generates a new QC report afterwards 
+
+#PBS -lwalltime=08:00:00
+#PBS -lselect=1:ncpus=200:mem=900gb
+
+module load anaconda3/personal
+for name in $(cat $PBS_O_WORKDIR/PEO1.txt)
+do
+/rds/general/user/gf21/home/anaconda3/bin/fastp -i $PBS_O_WORKDIR/$name.R1.fastq.gz -I $PBS_O_WORKDIR/$name.R2.fastq.gz -o trimmed_$name.R1.fastq.gz -O trimmed_$name.R2.fastq.gz --detect_adapter_for_pe -l 20 -j $name.fastp.json -h $name.fastp.html
+done
+
+cp * $PBS_O_WORKDIR
