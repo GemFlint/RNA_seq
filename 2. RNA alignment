@@ -28,3 +28,7 @@ STAR --runThreadN 12 \
 done
 
 cp * $PBS_O_WORKDIR
+
+#index bam files 
+module load samtools 
+samtools index file_name.bam 
