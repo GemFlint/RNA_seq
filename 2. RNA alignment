@@ -9,3 +9,22 @@ STAR --runThreadN 12 --runMode genomeGenerate --genomeDir /rds/general/project/d
 cp * $PBS_O_WORKDIR
 
 # Align to built genome 
+
+#PBS -lwalltime=08:00:00
+#PBS -lselect=1:ncpus=250:mem=900gb
+
+module load star
+
+for name in PEO1_1 PEO1_2 PEO1_3
+do
+STAR --runThreadN 12 \
+--genomeDir /rds/general/project/diantonio/live/tools/star99 \
+--sjdbGTFfile /rds/general/project/diantonio/live/tools/genomes/hg38_ucsc/hg38.refGene.gtf \
+--sjdbOverhang 99 \
+--outFileNamePrefix $name \
+--readFilesCommand gunzip -c \
+--readFilesIn /rds/general/project/diantonio/live/Gem/RNA_Seq/fastq/PEO1/trimmed_$name.R1.fastq.gz /rds/general/project/diantonio/live/Gem/RNA_Seq/fastq/PEO1/trimmed_$name.R2.fastq.gz \
+--outSAMtype BAM SortedByCoordinate
+done
+
+cp * $PBS_O_WORKDIR
