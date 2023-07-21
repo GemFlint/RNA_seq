@@ -9,7 +9,7 @@
 #PBS -lwalltime=08:00:00
 #PBS -lselect=1:ncpus=100:mem=900gb
 module load subread
-featureCounts -p -O -T 3 -a hg38.refGene.gtf -o PEO1_4_FC.txt *.bam
+featureCounts -p -O -T 3 -a hg38.refGene.gtf -o PEO1_4_FC.txt $PBS_O_WORKDIR/*.bam
 cp * $PBS_O_WORKDIR
 
 # txt file then must be reformatted ready for use in R studio for next step
