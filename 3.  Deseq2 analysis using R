@@ -4,4 +4,12 @@
 > BiocManager::install("Rsubread")
 
 # Conduct feature count, all .bam and .bai files of both conditions must be in same file (e.g PEO1 AND PEO4 in same one)
-library(Rsubread)
+# Done on terminal in job submission as could not load Rsubread
+
+#PBS -lwalltime=08:00:00
+#PBS -lselect=1:ncpus=100:mem=900gb
+module load subread
+featureCounts -p -O -T 3 -a hg38.refGene.gtf -o PEO1_4_FC.txt *.bam
+cp * $PBS_O_WORKDIR
+
+# txt file then must be reformatted ready for use in R studio for next step
