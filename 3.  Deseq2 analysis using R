@@ -1,0 +1,7 @@
+# To install Rsubread on R versions older than 4.3
+> if (!require("BiocManager", quietly = TRUE))
++     install.packages("BiocManager")
+> BiocManager::install("Rsubread")
+
+# Conduct feature count, all .bam and .bai files of both conditions must be in same file (e.g PEO1 AND PEO4 in same one)
+library(Rsubread)
