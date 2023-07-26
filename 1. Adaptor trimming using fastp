@@ -1,5 +1,12 @@
 # Adaptors trimmed using fastp that generates a new QC report afterwards 
+# Download fastp (only need to do once)
+module load anaconda3/personal
+conda install -c bioconda fastp
 
+# Create file with list of sample names- done in terminal
+echo > "PEO1_1 PEO1_2 PEO1_3" > PEO1.txt
+
+# Run fastp on file containing list of samples
 #PBS -lwalltime=08:00:00
 #PBS -lselect=1:ncpus=200:mem=900gb
 
