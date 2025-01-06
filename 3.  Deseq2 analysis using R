@@ -9,12 +9,22 @@
 #PBS -lselect=1:ncpus=100:mem=900gb
 
 module load subread
-featureCounts -T 3 -a $PBS_O_WORKDIR/hg38.refGene.gtf -o PEO1_4_FC.txt $PBS_O_WORKDIR/*.bam
+
+OUTPUT_FILE=$PBS_O_WORKDIR/fc_peo4_pds6hr.txt
+
+featureCounts -T 3 -a $PBS_O_WORKDIR/hg38.refGene.gtf -o temp_feature_counts.txt $PBS_O_WORKDIR/*.bam
+
+awk 'BEGIN{OFS="\t"} NR==1 {for(i=7;i<=NF;i++) sample[i]=$i} NR>2 {printf $1; for(i=7;i<=NF;i++) printf "\t"$(i); print ""}' temp_feature_counts.txt > $OUTPUT_FILE
+
+HEADER="GeneID"
+for bam in $PBS_O_WORKDIR/*.bam; do
+    BASENAME=$(basename $bam .bam)
+    HEADER="$HEADER\t$BASENAME"
+done
+sed -i "1s/.*/$HEADER/" $OUTPUT_FILE
 
 cp * $PBS_O_WORKDIR
 
-
-# txt file then must be reformatted ready for use 
 # convert txt into csv file from previous step
 # these steps to be done in r studio
 
