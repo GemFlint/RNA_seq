@@ -58,7 +58,6 @@ samp2 <- samp2[,-1]
 # check again with dim(samp2), you should now have the right number as to the right number of samples
 dim (samp2)
 # the continue with the following steps (each title of condition corresponds to what sample type, eg mutant or wildtype, peo1 or peo1 treated)
-condition <- c("control", "control", "treated", "treated", "control", "treated")
 colData <- DataFrame(condition = condition)
 dds <- DESeqDataSetFromMatrix(countData = samp2, colData = colData, design = ~ condition)
 
