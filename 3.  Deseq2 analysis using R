@@ -42,12 +42,25 @@ samp2[is.na(samp2)] <- 0
 BiocManager::install("DESeq2")
 library(DESeq2)
 
-# make deseq2 dataset (dds)
+# make deseq2 dataset (dds) # .txt file is the .txt fc file generated previously
 samp2 <- read.delim("fc_PEO_RNA.txt", header = TRUE, sep = "\t")
 condition <- c("PEO1", "PEO1", "PEO1", "PEO4", "PEO4", "PEO4")
 dds <- DESeqDataSetFromMatrix(countData=samp2, colData=DataFrame(condition), design=~condition)
 #gives details on how many rows and columns
 dds
+
+# if you get errors in the dds step, then try these steps
+# first run this to get the dimensions of the file, if you have the geneID counting as a column it'll say 1x extra than the number of samples that you have
+dim(samp2)
+# if you do have an incorrect number of columns, then do this code- this will set it as a row name, and then remove the title
+rownames(samp2) <- samp2[,1]  
+samp2 <- samp2[,-1] 
+# check again with dim(samp2), you should now have the right number as to the right number of samples
+dim (samp2)
+# the continue with the following steps (each title of condition corresponds to what sample type, eg mutant or wildtype, peo1 or peo1 treated)
+condition <- c("control", "control", "treated", "treated", "control", "treated")
+colData <- DataFrame(condition = condition)
+dds <- DESeqDataSetFromMatrix(countData = samp2, colData = colData, design = ~ condition)
 
 #remove rows that have <10 counts - this reduces memory size of dds and increases deseq speed
 dds <- dds[rowSums(counts(dds))>=10,]
@@ -60,7 +73,7 @@ res
 #get the name of the comparisons made aka coefficients
 resultsNames(dds) 
 
-#Shrink fold change - coef = name from above step 
+#Shrink fold change - coef = name from above step (it will say in the bulk if text that r studio produces)
 res.shr <- lfcShrink(dds,coef="condition_PEO4_vs_PEO1")
 
 #Remove rows with missing adj p value
