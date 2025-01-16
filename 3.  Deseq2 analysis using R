@@ -82,3 +82,10 @@ resFix <- res.shr[!is.na(res.shr$padj),]
 write.csv(as.data.frame(resFix), file="geneID_RNA_PEO1_v_PEO4.csv")
 
 
+# to generate a fc file of only genes that have a g4 present
+# create a .txt file using text editor (mac) of a list of all the genes on seperate rows 
+# on hpc use the following code 
+awk 'NR==FNR{genes[$1]; next} $1 in genes' g4_genes_list.txt fc_file_already_generated.txt > filtered_counts.txt
+
+# to add back in geneID and sample titles, use code and change each 'sample' to the title of the column
+sed -i '1iGeneID\tsample1\tsample2' fc_filtered_file.txt
