@@ -23,7 +23,7 @@ STAR --runThreadN 12 \
 --sjdbOverhang 99 \
 --outFileNamePrefix $name \
 --readFilesCommand gunzip -c \
---readFilesIn /rds/general/project/diantonio/live/Gem/RNA_Seq/fastq/PEO1/trimmed_$name.R1.fastq.gz /rds/general/project/diantonio/live/Gem/RNA_Seq/fastq/PEO1/trimmed_$name.R2.fastq.gz \
+--readFilesIn /rds/general/project/diantonio/live/Gem/RNA_Seq/fastq/PEO1/trimmed_$name.R1.fq.gz /rds/general/project/diantonio/live/Gem/RNA_Seq/fastq/PEO1/trimmed_$name.R2.fq.gz \
 --outSAMtype BAM SortedByCoordinate
 done
 
