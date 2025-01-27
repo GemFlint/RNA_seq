@@ -1,4 +1,4 @@
-# Build genome with correct overhang (this depends on the sequence fragment size -1, in this case 99)
+# Build genome with correct overhang (this depends on the sequence fragment size -1, in this case 99) (e.g PE100 sequencing = 99, PE150 = 149, PE75 = 74)
 
 #PBS -lwalltime=08:00:00
 #PBS -lselect=1:ncpus=10:mem=900gb
