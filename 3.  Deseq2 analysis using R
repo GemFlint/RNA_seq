@@ -12,7 +12,7 @@ module load subread
 
 OUTPUT_FILE=$PBS_O_WORKDIR/fc_peo4_pds6hr.txt
 
-featureCounts -T 3 -a $PBS_O_WORKDIR/hg38.refGene.gtf -o temp_feature_counts.txt $PBS_O_WORKDIR/*.bam
+featureCounts -T 3 -a /rds/general/project/diantonio/live/tools/genomes/hg38_ucsc/hg38.refGene.gtf -o temp_feature_counts.txt $PBS_O_WORKDIR/*.bam
 
 awk 'BEGIN{OFS="\t"} NR==1 {for(i=7;i<=NF;i++) sample[i]=$i} NR>2 {printf $1; for(i=7;i<=NF;i++) printf "\t"$(i); print ""}' temp_feature_counts.txt > $OUTPUT_FILE
 
